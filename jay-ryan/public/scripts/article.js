@@ -29,7 +29,8 @@ var app = app || {};
     rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
     */
 
-    Article.all = rawData.map(Article => Article(articleObject));
+    Article.all = rawData.map(articleObject => new Article(articleObject));
+
     //Refactored the old forEach function.
 
   };
@@ -43,13 +44,11 @@ var app = app || {};
   };
 
   Article.numWordsAll = () => {
-    return Article.all.map(article => article.body).reduce(function (sum, totalWords) {
-    return totalWords.split(' ').length + sum},0)
-    };
+    return Article.all.map(article => article.body).reduce(function (sum, totalWords) { return totalWords.split(' ').length + sum},0)
+  };
 
   Article.allAuthors = () => {
-    return Article.all.map(article => article.author)
-    .reduce((acc, cur) => {
+    return Article.all.map(article => article.author).reduce((acc, cur) => {
       if(acc.indexOf(cur===-1)){
         acc.push(cur);
       }
@@ -58,9 +57,17 @@ var app = app || {};
   };
 
   Article.numWordsByAuthor = () => {
-    return Article.allAuthors().map(author => {})
+    return Article.allAuthors().map(author => {
+      return {
+        name: author,
+        numwords: Article.all.filter(article => {
+        }) .map(article => {
+          article.body.split(' ').length;
+        }).reduce((acc,cur) => acc + cur)
+      }
+    })
   };
-
+    
   Article.truncateTable = callback => {
     $.ajax({
       url: '/articles',
