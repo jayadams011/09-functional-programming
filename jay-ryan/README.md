@@ -1,14 +1,4 @@
 
-
-## Resources  
-
-[MDN: map()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map)
-
-[MDN: filter()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter)
-
-[MDN: reduce()](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/Reduce)
-
-
 ## User Stories and Feature Tasks
 
 *As a user, I want an admin page so I can easily view the stats of my blog app.*
@@ -36,11 +26,6 @@
 - Transform each author string into an object with properties for the author's name, as well as the total number of words across all articles written by the specified author.
   - HINT: This `.map()` call should be set up to return an object literal with two properties. The first property should be pretty straightforward, but you will need to chain some combination of `.filter()`, `.map()`, and `.reduce()` to get the value for the second property.
 
-### Stretch Goal
-
-*As a user, I want additional stats so that I can track the progress of my app.*
-
-- What additional statistical analysis would be of interest to you with this data set? Code it up!
 
 ## Documentation
 
@@ -51,16 +36,15 @@
 **Version**: 1.0.0 (increment the patch/fix version number up if you make more commits past your first submission)
 
 ## Overview
-<!-- Provide a high level overview of what this application is and why you are building it, beyond the fact that it's an assignment for a Code Fellows 301 class. (i.e. What's your problem domain?) -->
+<!-- This is a blog page that that allows the user to also add new articles -->
 
-## Getting Started
-<!-- What are the steps that a user must take in order to build this app on their own machine and get it running? -->
 
 ## Architecture
-<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information. -->
+<!-- Provide a detailed description of the application design. What technologies (languages, libraries, etc) you're using, and any other relevant design information.  The app uses HTML, CSS and Javascript. We are alos incorporating jquery and handlebars.  -->
 
 ## Change Log
-<!-- Use this are to document the iterative changes made to your application as each feature is successfully implemented. Use time stamps. Here's an examples:
+<!-- Changes made.  
+01-22-2018 9:30am - wrapped the contents of articleview and Article into IIFEs.
 
 01-01-2001 4:59pm - Application now has a fully-functional express server, with GET and POST routes for the book resource.
 
