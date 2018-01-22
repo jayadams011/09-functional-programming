@@ -30,8 +30,8 @@ var app = app || {};
     */
 
     Article.all = rawData.map(articleObject => new Article(articleObject));
-    //Refactored the old forEach function.
 
+    //Refactored the old forEach function.
 
   };
 
