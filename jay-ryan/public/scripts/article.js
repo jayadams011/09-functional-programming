@@ -29,9 +29,8 @@ var app = app || {};
     rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
     */
 
-    Article.all = rawData.map(Article => Article(articleObject);
+    Article.all = rawData.map(Article => Article(articleObject));
     //Refactored the old forEach function.
-
 
   };
 
