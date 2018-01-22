@@ -29,6 +29,10 @@ var app = app || {};
     rawData.forEach(articleObject => Article.all.push(new Article(articleObject)));
     */
 
+    Article.all = rawData.map(Article => Article(articleObject);
+    //Refactored the old forEach function.
+
+
   };
 
   Article.fetchAll = callback => {
@@ -40,8 +44,9 @@ var app = app || {};
   };
 
   Article.numWordsAll = () => {
-    return Article.all.map().reduce()
-  };
+    return Article.all.map(body => body.split(' ').length.reduce((acc, cur) => {
+    return acc+cur})
+    )};
 
   Article.allAuthors = () => {
     return Article.all.map().reduce();
