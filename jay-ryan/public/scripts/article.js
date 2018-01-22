@@ -44,12 +44,18 @@ var app = app || {};
   };
 
   Article.numWordsAll = () => {
-    return Article.all.map(body => body.split(' ').length.reduce((acc, cur) => {
-    return acc+cur})
-    )};
+    return Article.all.map(article => article.body).reduce(function (sum, totalWords) {
+    return totalWords.split(' ').length + sum},0)
+    };
 
   Article.allAuthors = () => {
-    return Article.all.map().reduce();
+    return Article.all.map(article => article.author)
+    .reduce((acc, cur) => {
+      if(acc.indexOf(cur===-1)){
+        acc.push(cur);
+      }
+      return acc;
+    },[]);
   };
 
   Article.numWordsByAuthor = () => {
@@ -101,4 +107,4 @@ var app = app || {};
   }
 
   module.article = article;
-})(window);
+})(app);
