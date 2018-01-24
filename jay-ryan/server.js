@@ -7,7 +7,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const PORT = process.env.PORT || 3000;
 const app = express();
-const conString = 'postgres://localhost:5432';
+const conString = 'postgres://localhost:5432/09-functional-programming';
 const client = new pg.Client(conString);
 client.connect();
 client.on('error', err => {
@@ -18,7 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('./public'));
 
-app.get('/', (request,response) => response.sendFile('index.html', {root: './public'}));
+app.get('/', (request, response) => response.sendFile('index.html', {root: './public'}));
 app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'}));
 app.get('/admin', (request, response) => response.sendFile('admin.html', {root: './public'}));
 app.get('/articles', (request, response) => {
@@ -78,7 +78,7 @@ app.put('/articles/:id', (request, response) => {
     SET author=$1, "authorUrl"=$2
     WHERE author_id=$3
     `,
-    [request.body.author, request.body.authorUrl, request.body.author_id]
+  [request.body.author, request.body.authorUrl, request.body.author_id]
   )
     .then(() => {
       client.query(`
@@ -86,14 +86,14 @@ app.put('/articles/:id', (request, response) => {
       SET author_id=$1, title=$2, category=$3, "publishedOn"=$4, body=$5
       WHERE article_id=$6
       `,
-        [
-          request.body.author_id,
-          request.body.title,
-          request.body.category,
-          request.body.publishedOn,
-          request.body.body,
-          request.params.id
-        ]
+      [
+        request.body.author_id,
+        request.body.title,
+        request.body.category,
+        request.body.publishedOn,
+        request.body.body,
+        request.params.id
+      ]
       )
     })
     .then(() => response.send('Update complete'))
@@ -147,7 +147,7 @@ function loadArticles() {
             FROM authors
             WHERE author=$5;
           `,
-              [ele.title, ele.category, ele.publishedOn, ele.body, ele.author]
+            [ele.title, ele.category, ele.publishedOn, ele.body, ele.author]
             )
               .catch(console.error);
           })
@@ -157,6 +157,7 @@ function loadArticles() {
 }
 
 function loadDB() {
+  console.log('loaddb');
   client.query(`
     CREATE TABLE IF NOT EXISTS
     authors (
