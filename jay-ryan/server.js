@@ -18,6 +18,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(express.static('./public'));
 
+app.get('/', (request,response) => response.sendFile('index.html', {root: './public'}));
 app.get('/new', (request, response) => response.sendFile('new.html', {root: './public'}));
 app.get('/admin', (request, response) => response.sendFile('admin.html', {root: './public'}));
 app.get('/articles', (request, response) => {
@@ -26,8 +27,8 @@ app.get('/articles', (request, response) => {
     INNER JOIN authors
       ON articles.author_id=authors.author_id;`
   )
-  .then(result => response.send(result.rows))
-  .catch(console.error);
+    .then(result => response.send(result.rows))
+    .catch(console.error);
 });
 
 app.post('/articles', (request, response) => {
@@ -79,24 +80,24 @@ app.put('/articles/:id', (request, response) => {
     `,
     [request.body.author, request.body.authorUrl, request.body.author_id]
   )
-  .then(() => {
-    client.query(`
+    .then(() => {
+      client.query(`
       UPDATE articles
       SET author_id=$1, title=$2, category=$3, "publishedOn"=$4, body=$5
       WHERE article_id=$6
       `,
-      [
-        request.body.author_id,
-        request.body.title,
-        request.body.category,
-        request.body.publishedOn,
-        request.body.body,
-        request.params.id
-      ]
-    )
-  })
-  .then(() => response.send('Update complete'))
-  .catch(console.error);
+        [
+          request.body.author_id,
+          request.body.title,
+          request.body.category,
+          request.body.publishedOn,
+          request.body.body,
+          request.params.id
+        ]
+      )
+    })
+    .then(() => response.send('Update complete'))
+    .catch(console.error);
 });
 
 app.delete('/articles/:id', (request, response) => {
@@ -104,14 +105,14 @@ app.delete('/articles/:id', (request, response) => {
     `DELETE FROM articles WHERE article_id=$1;`,
     [request.params.id]
   )
-  .then(() => response.send('Delete complete'))
-  .catch(console.error);
+    .then(() => response.send('Delete complete'))
+    .catch(console.error);
 });
 
 app.delete('/articles', (request, response) => {
   client.query('DELETE FROM articles')
-  .then(() => response.send('Delete complete'))
-  .catch(console.error);
+    .then(() => response.send('Delete complete'))
+    .catch(console.error);
 });
 
 loadDB();
@@ -128,31 +129,31 @@ function loadAuthors() {
         'INSERT INTO authors(author, "authorUrl") VALUES($1, $2) ON CONFLICT DO NOTHING',
         [ele.author, ele.authorUrl]
       )
-      .catch(console.error);
+        .catch(console.error);
     })
   })
 }
 
 function loadArticles() {
   client.query('SELECT COUNT(*) FROM articles')
-  .then(result => {
-    if(!parseInt(result.rows[0].count)) {
-      fs.readFile('./public/data/hackerIpsum.json', (err, fd) => {
-        JSON.parse(fd.toString()).forEach(ele => {
-          client.query(`
+    .then(result => {
+      if(!parseInt(result.rows[0].count)) {
+        fs.readFile('./public/data/hackerIpsum.json', (err, fd) => {
+          JSON.parse(fd.toString()).forEach(ele => {
+            client.query(`
             INSERT INTO
             articles(author_id, title, category, "publishedOn", body)
             SELECT author_id, $1, $2, $3, $4
             FROM authors
             WHERE author=$5;
           `,
-            [ele.title, ele.category, ele.publishedOn, ele.body, ele.author]
-          )
-          .catch(console.error);
+              [ele.title, ele.category, ele.publishedOn, ele.body, ele.author]
+            )
+              .catch(console.error);
+          })
         })
-      })
-    }
-  })
+      }
+    })
 }
 
 function loadDB() {
@@ -164,8 +165,8 @@ function loadDB() {
       "authorUrl" VARCHAR (255)
     );`
   )
-  .then(loadAuthors)
-  .catch(console.error);
+    .then(loadAuthors)
+    .catch(console.error);
 
   client.query(`
     CREATE TABLE IF NOT EXISTS
@@ -178,6 +179,6 @@ function loadDB() {
       body TEXT NOT NULL
     );`
   )
-  .then(loadArticles)
-  .catch(console.error);
+    .then(loadArticles)
+    .catch(console.error);
 }
